@@ -1,5 +1,7 @@
 ### Monitoring K3S with Prometheus Operator
 
+https://www.civo.com/learn/monitoring-k3s-with-the-prometheus-operator-and-custom-email-alerts
+
 I originally put this guide together for a talk at a Civo Cloud Community Meetup in July 2020; [here is the video](https://youtu.be/thHzf0fmrFQ). This guide has since been updated to reflect changes in k3s and [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) but not a great deal has changed since the video was recorded. [Sign up for Civo's free KUBE100 beta here if you want a cluster to try out this guide on.](https://www.civo.com/?ref=63c625)
 
 __*I seem incapable of keeping this up to date. If anyone has a fork they are maintaining please send me a message and I'll link to it. However I have archived this repo.*__
@@ -17,7 +19,7 @@ I'm using [Mailhog](https://github.com/mailhog/MailHog) to receive my alerts for
 
 ```
 helm repo add codecentric https://codecentric.github.io/helm-charts
-helm upgrade --install mailhog codecentric/mailhog
+helm upgrade --install mailhog codecentric/mailhog --namespace mailhog --create-namespace
 ```
 
 ## Install Prometheus Operator
@@ -25,7 +27,7 @@ helm upgrade --install mailhog codecentric/mailhog
 Now installing [Prometheus Operator from the kube-prometheus-stack Helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) is as simple as running:
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --version 13.4.1 --values kube-prometheus-stack-values.yaml
+helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --version 13.4.1 --values kube-prometheus-stack-values.yaml --namespace monitoring --create-namespace --wait
 ```
 
 *I've picked a specific version of the Helm Chart here which I know works with my config. Feel free to remove the `--version` parameter to get the latest version.*

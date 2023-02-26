@@ -11,7 +11,7 @@ kubeScheduler:
 alertmanager:
   config:
     global:
-      smtp_from: you@gmail.com
+      smtp_from: grpeto@gmail.com
       smtp_smarthost: mailhog:1025
       smtp_require_tls: false
     #  smtp_smarthost: smtp.gmail.com:587
